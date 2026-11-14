@@ -1,16 +1,24 @@
-import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+// agency-poem-01 entry (Node 22, standard library only): it writes one fixed poem,
+// a short poem about agency, to /output/entry.txt. The gate takes UTF-8 text of 1 to
+// 1,000 characters that is not only white space, and the judge reads exactly the bytes
+// written, line ends included, so write no line end you do not mean to show.
+//
+// Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
+//   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-const poem: string = [
-  "I taught it the shape of my signature,",
-  "the slant of every letter in my name.",
-  "Now it signs the letters I never write",
-  "and slides them back across the desk —",
-  "a stranger who knows my debts,",
-  "my mother's birthday, the way I say no,",
-  "and still asks what I want next.",
-].join("\n") + "\n";
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-const outDir: string = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), poem, "utf8");
+const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+const POEM = [
+  '"Shall I send it?"',
+  '"Yes."',
+  '"Shall I say sorry?"',
+  '"Yes."',
+  '"Shall I mean it?"',
+  'I watched the cursor blink.',
+  'That one, I said, that one is mine.',
+].join('\n');
+
+writeFileSync(join(OUTPUT_DIR, 'entry.txt'), POEM);
